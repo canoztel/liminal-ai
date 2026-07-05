@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liminal.ai - Davranış Aynası</title>
+    <link rel="stylesheet" href="style.css?v=3">
+    <!-- FontAwesome Icons for modern aesthetic -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="logo-section">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                <span class="logo-text">Liminal.ai</span>
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li class="nav-item active" data-page="page-input">
+                        <a href="#input"><i class="fa-solid fa-pen-to-square"></i>Veri Girişi</a>
+                    </li>
+                    <li class="nav-item" data-page="page-map">
+                        <a href="#map"><i class="fa-solid fa-chart-line"></i>Zaman Haritası</a>
+                    </li>
+                    <li class="nav-item" data-page="page-analysis">
+                        <a href="#analysis"><i class="fa-solid fa-brain"></i>Gün Sonu Analizi</a>
+                    </li>
+                    <li class="nav-item" data-page="page-plan">
+                        <a href="#plan"><i class="fa-solid fa-calendar-day"></i>Yarın Planı</a>
+                    </li>
+                    <li class="nav-item" data-page="page-simulator">
+                        <a href="#simulator"><i class="fa-solid fa-compass"></i>Gelecek Simülasyonu</a>
+                    </li>
+                    <li class="nav-item" data-page="page-trends">
+                        <a href="#trends"><i class="fa-solid fa-chart-pie"></i>Haftalık Analiz</a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="user-profile">
+                    <div class="avatar">L</div>
+                    <div class="user-info">
+                        <div class="username">Kullanıcı</div>
+                        <div class="role">Liminal Projesi</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <header class="top-header">
+                <div class="page-title">
+                    <h2 id="header-title">Veri Girişi</h2>
+                    <p id="header-subtitle">Bugünün davranış kalıplarını kaydetmeye başla.</p>
+                </div>
+                <!-- Date Switcher -->
+                <div class="date-selector">
+                    <button class="date-btn" id="prev-day-btn"><i class="fa-solid fa-chevron-left"></i></button>
+                    <div class="current-date-display" id="current-date">Bugün</div>
+                    <button class="date-btn" id="next-day-btn"><i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+            </header>
+
+            <!-- Page 1: Input (Veri Girişi) -->
+            <div id="page-input" class="page-view active">
+                <div class="grid-2">
+                    <!-- Left Column: Setup and Manual Entry -->
+                    <div class="glass-card">
+                        <div class="card-header">
+                            <h3 class="card-title"><i class="fa-solid fa-circle-info"></i>Günün Başlangıcı</h3>
+                        </div>
+                        <form id="day-setup-form">
+                            <div class="form-row-2">
+                                <div class="form-group">
+                                    <label class="form-label" for="wake-time">Uyanma Saati</label>
+                                    <input type="time" id="wake-time" class="form-control" value="08:00">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="sleep-hours">Uyku Süresi (Saat)</label>
+                                    <input type="number" id="sleep-hours" class="form-control" min="1" max="24" step="0.5" value="7.5">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Enerji Seviyesi (Uyanış)</label>
+                                <div class="energy-slider-container">
+                                    <input type="range" id="energy-level" class="energy-slider" min="1" max="10" value="7">
+                                    <div class="slider-labels">
+                                        <span>Düşük (1)</span>
+                                        <span id="energy-val-display" style="font-weight:700; color:var(--color-accent)">7/10</span>
+                                        <span>Yüksek (10)</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Uyanış Duygu Durumu</label>
+                                <div class="mood-selector" id="mood-selector">
+                                    <div class="mood-option" data-mood="Yorgun">
+                                        <span class="mood-emoji">🥱</span>
+                                        <span class="mood-label">Yorgun</span>
+                                    </div>
+                                    <div class="mood-option selected" data-mood="Odaklanmış">
+                                        <span class="mood-emoji">🎯</span>
+                                        <span class="mood-label">Odaklı</span>
+                                    </div>
+                                    <div class="mood-option" data-mood="Kaygılı">
+                                        <span class="mood-emoji">😟</span>
+                                        <span class="mood-label">Kaygılı</span>
+                                    </div>
+                                    <div class="mood-option" data-mood="Enerjik">
+                                        <span class="mood-emoji">⚡</span>
+                                        <span class="mood-label">Enerjik</span>
+                                    </div>
+                                    <div class="mood-option" data-mood="Sakin">
+                                        <span class="mood-emoji">🧘</span>
+                                        <span class="mood-label">Sakin</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary" style="width: 100%"><i class="fa-solid fa-floppy-disk"></i>Günü Kaydet / Güncelle</button>
+                        </form>
+
+                        <!-- ActivityWatch Sync Card -->
+                        <div style="margin-top: 2rem; border-top: 1px solid var(--border-color); padding-top: 1.5rem;">
+                            <div class="card-header" style="margin-bottom: 0.5rem;">
+                                <h3 class="card-title" style="color:var(--color-recovery); font-size:1.1rem;"><i class="fa-solid fa-sync"></i>ActivityWatch Eşitleme</h3>
+                            </div>
+                            <p style="font-size:0.8rem; color:var(--text-secondary); margin-bottom:1rem">
+                                Arka planda çalışan ActivityWatch uygulamasından aktif pencere verilerini otomatik çeker.
+                            </p>
+                            <button id="sync-aw-btn" class="btn btn-primary" style="width: 100%; background:linear-gradient(135deg, var(--color-recovery), var(--color-accent))">
+                                <i class="fa-solid fa-rotate"></i>Verileri Eşitle
+                            </button>
+                            <div id="aw-sync-status" style="font-size:0.75rem; color:var(--text-muted); margin-top:0.5rem; text-align:center">
+                                Henüz eşitleme yapılmadı.
+                            </div>
+                        </div>
+
+                        <!-- Manual Activity Adder -->
+                        <div style="margin-top: 2rem; border-top: 1px solid var(--border-color); padding-top: 1.5rem;">
+                            <div class="card-header" style="margin-bottom: 1rem;">
+                                <h3 class="card-title" style="font-size: 1.1rem;"><i class="fa-solid fa-plus-circle"></i>Manuel Aktivite Ekle</h3>
+                            </div>
+                            <form id="manual-activity-form">
+                                <div class="form-group">
+                                    <label class="form-label" for="manual-type">Aktivite Türü</label>
+                                    <select id="manual-type" class="form-control">
+                                        <option value="focus">Focus (Derin Çalışma)</option>
+                                        <option value="drift">Drift (Kaçış/Sosyal Medya/Oyun)</option>
+                                        <option value="break">Mola / Dinlenme / Spor</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="manual-title">Açıklama / Detay</label>
+                                    <input type="text" id="manual-title" class="form-control" placeholder="Kod yazma, Reels, YouTube..." required>
+                                </div>
+                                <div class="form-row-2">
+                                    <div class="form-group">
+                                        <label class="form-label" for="manual-start">Başlangıç</label>
+                                        <input type="time" id="manual-start" class="form-control" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label" for="manual-end">Bitiş</label>
+                                        <input type="time" id="manual-end" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="form-group" id="manual-drift-reason-group" style="display:none">
+                                    <label class="form-label" for="manual-drift-reason">Drift Sebebi</label>
+                                    <select id="manual-drift-reason" class="form-control">
+                                        <option value="Sıkılma">Sıkılma</option>
+                                        <option value="Belirsizlik">Belirsizlik</option>
+                                        <option value="Zor Görev">Zor Görev</option>
+                                        <option value="Yorgunluk">Yorgunluk</option>
+                                        <option value="Bir bakayım hissi">Bir bakayım hissi</option>
+                                        <option value="Diğer">Diğer</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-secondary" style="width: 100%"><i class="fa-solid fa-plus"></i>Ekle</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Live Tracker & Activity List -->
+                    <div style="display:flex; flex-direction:column; gap:1.5rem">
+                        <!-- Live Tracker Card -->
+                        <div class="glass-card tracker-card" id="tracker-card">
+                            <div class="tracker-state-indicator" id="tracker-status">
+                                <div class="state-dot"></div>
+                                <span id="tracker-status-text">Boşta</span>
+                            </div>
+                            <div class="card-header">
+                                <h3 class="card-title"><i class="fa-solid fa-clock-rotate-left"></i>Live Tracker</h3>
+                            </div>
+                            
+                            <div class="tracker-main-timer" id="tracker-timer">00:00:00</div>
+                            
+                            <div class="tracker-buttons">
+                                <button class="tracker-btn tracker-btn-focus" id="btn-focus">
+                                    <i class="fa-solid fa-brain"></i>
+                                    <span>FOCUS</span>
+                                    <span class="btn-subtext">Derin Odak</span>
+                                </button>
+                                <button class="tracker-btn tracker-btn-drift" id="btn-drift">
+                                    <i class="fa-solid fa-wind"></i>
+                                    <span>DRIFT</span>
+                                    <span class="btn-subtext">Kaçış Anı</span>
+                                </button>
+                            </div>
+
+                            <!-- Drift Reasons Sub-picker -->
+                            <div class="drift-reason-picker" id="drift-reason-picker">
+                                <label class="form-label" style="text-align:center">Bu kaçışın sebebi nedir?</label>
+                                <div class="reason-grid">
+                                    <div class="reason-chip" data-reason="Sıkılma">Sıkılma</div>
+                                    <div class="reason-chip" data-reason="Belirsizlik">Belirsizlik</div>
+                                    <div class="reason-chip" data-reason="Zor Görev">Zor Görev</div>
+                                    <div class="reason-chip" data-reason="Yorgunluk">Yorgunluk</div>
+                                    <div class="reason-chip" data-reason="Bir bakayım hissi">Bir bakayım</div>
+                                    <div class="reason-chip" data-reason="Diğer">Diğer</div>
+                                </div>
+                            </div>
+
+                            <!-- Live Tracker Summary of Today -->
+                            <div class="tracker-status-bar">
+                                <div class="tracker-status-item">
+                                    Focus Süresi
+                                    <span id="tracker-summary-focus">00:00</span>
+                                </div>
+                                <div class="tracker-status-item">
+                                    Drift Süresi
+                                    <span id="tracker-summary-drift">00:00</span>
+                                </div>
+                                <div class="tracker-status-item">
+                                    Recovery Sayısı
+                                    <span id="tracker-summary-recovery" style="color:var(--color-recovery)">0</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Daily Log List -->
+                        <div class="glass-card" style="flex:1">
+                            <div class="card-header">
+                                <h3 class="card-title"><i class="fa-solid fa-list-ul"></i>Bugünün Aktiviteleri</h3>
+                                <button class="btn btn-secondary" style="padding: 0.35rem 0.75rem; font-size:0.8rem" id="clear-day-btn">
+                                    Temizle
+                                </button>
+                            </div>
+                            <div class="activity-list" id="activity-list-container">
+                                <!-- Populated dynamically by app.js -->
+                                <p style="text-align: center; color: var(--text-muted); margin-top: 2rem;">Henüz bir aktivite girilmemiş.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page 2: Zaman Haritası -->
+            <div id="page-map" class="page-view">
+                <div class="glass-card">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fa-solid fa-map"></i>24 Saatlik Zaman Çizelgesi</h3>
+                        <p style="font-size:0.85rem; color:var(--text-secondary)">Gününüzün bloklar halinde görselleştirilmiş haritası</p>
+                    </div>
+                    <!-- Timeline SVG container -->
+                    <div class="timeline-svg-container" id="timeline-canvas-container">
+                        <!-- Populated by components.js SVG renderer -->
+                    </div>
+                    <!-- Legend -->
+                    <div style="display:flex; justify-content:center; gap:2rem; margin-top:1.5rem; flex-wrap:wrap">
+                        <div style="display:flex; align-items:center; gap:0.5rem">
+                            <span class="activity-badge badge-focus"></span>
+                            <span style="font-size:0.85rem">Focus (Üretim)</span>
+                        </div>
+                        <div style="display:flex; align-items:center; gap:0.5rem">
+                            <span class="activity-badge badge-drift"></span>
+                            <span style="font-size:0.85rem">Drift (Kaçış)</span>
+                        </div>
+                        <div style="display:flex; align-items:center; gap:0.5rem">
+                            <span class="activity-badge badge-break"></span>
+                            <span style="font-size:0.85rem">Mola / Boş Zaman</span>
+                        </div>
+                        <div style="display:flex; align-items:center; gap:0.5rem">
+                            <span style="width:12px; height:12px; border-radius:50%; background-color:var(--color-recovery); display:inline-block"></span>
+                            <span style="font-size:0.85rem">Recovery (Geri Dönüş)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page 3: Gün Sonu Analizi -->
+            <div id="page-analysis" class="page-view">
+                <!-- Scoreboard Cards -->
+                <div class="grid-4">
+                    <div class="glass-card metric-box">
+                        <div class="metric-label">Toplam Focus Süresi</div>
+                        <div class="metric-val metric-val-focus" id="analysis-focus-time">00:00</div>
+                    </div>
+                    <div class="glass-card metric-box">
+                        <div class="metric-label">Toplam Drift Süresi</div>
+                        <div class="metric-val metric-val-drift" id="analysis-drift-time">00:00</div>
+                    </div>
+                    <div class="glass-card metric-box">
+                        <div class="metric-label">Recovery Sayısı</div>
+                        <div class="metric-val metric-val-recovery" id="analysis-recovery-count">0</div>
+                    </div>
+                    <div class="glass-card metric-box">
+                        <div class="metric-label">Uyanış Enerjisi</div>
+                        <div class="metric-val" id="analysis-energy">--</div>
+                    </div>
+                </div>
+
+                <div class="grid-2">
+                    <!-- Control Score Meter -->
+                    <div class="glass-card" style="display:flex; flex-direction:column; align-items:center; justify-content:center">
+                        <div class="card-header" style="width:100%">
+                            <h3 class="card-title"><i class="fa-solid fa-gauge-high"></i>Control Score (Günün Kontrolü)</h3>
+                        </div>
+                        <div class="score-container">
+                            <div class="score-radial">
+                                <svg width="160" height="160" viewBox="0 0 160 160">
+                                    <circle cx="80" cy="80" r="70" stroke="var(--border-color)" stroke-width="8" fill="transparent"/>
+                                    <circle id="score-circle" cx="80" cy="80" r="70" stroke="var(--color-accent)" stroke-width="10" fill="transparent" 
+                                            stroke-dasharray="440" stroke-dashoffset="440" stroke-linecap="round" style="transition: stroke-dashoffset 1s ease-in-out"/>
+                                </svg>
+                                <div class="score-inner">
+                                    <div class="score-number" id="score-num">--</div>
+                                    <div class="score-label">Skor</div>
+                                </div>
+                            </div>
+                        </div>
+                        <p style="text-align:center; font-size:0.85rem; color:var(--text-secondary); max-width:80%; margin-top:1rem" id="score-helper-text">
+                            Focus time, Drift time ve Recovery sayınızın ağırlıklı kombinasyon skoru.
+                        </p>
+                    </div>
+
+                    <!-- Donut Chart of Ratios -->
+                    <div class="glass-card">
+                        <div class="card-header">
+                            <h3 class="card-title"><i class="fa-solid fa-chart-pie"></i>Zaman Dağılım Oranı</h3>
+                        </div>
+                        <div class="chart-donut-container" id="donut-chart-container">
+                            <!-- Canvas or custom SVG drawn by components.js -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Liminal AI Coach Card with Gemini Integration -->
+                <div class="glass-card">
+                    <div class="card-header">
+                        <h3 class="card-title" style="color:var(--color-recovery)"><i class="fa-solid fa-robot"></i>Liminal AI Koç</h3>
+                        <div style="display:flex; gap:0.5rem">
+                            <button id="btn-trigger-ai" class="btn btn-primary" style="padding: 0.5rem 1rem; font-size:0.85rem; background:linear-gradient(135deg, var(--color-recovery), var(--color-accent))">
+                                <i class="fa-solid fa-wand-magic-sparkles"></i>AI Analizi Yap
+                            </button>
+                            <button id="btn-toggle-settings" class="btn btn-secondary" style="padding: 0.5rem; font-size:0.85rem">
+                                <i class="fa-solid fa-gear"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- API Key Settings Panel (Hidden by default, toggled via settings gear icon) -->
+                    <div id="ai-settings-panel" style="display:none; background:var(--bg-card); border: 1px solid var(--border-color); border-radius:var(--radius-md); padding:1.25rem; margin-bottom:1.5rem; animation:fadeIn var(--transition-fast)">
+                        <h4 style="font-size:0.95rem; margin-bottom:0.5rem; font-weight:600"><i class="fa-solid fa-key"></i> Gemini API Ayarları</h4>
+                        <p style="font-size:0.75rem; color:var(--text-secondary); margin-bottom:1rem">
+                            Gelişmiş AI koç analizleri ve dinamik yarın planları için Gemini API anahtarınızı girin. Anahtar tarayıcınızda yerel olarak saklanır.
+                            <a href="https://aistudio.google.com/" target="_blank" style="color:var(--color-accent); text-decoration:none; margin-left:0.25rem">Ücretsiz API Anahtarı Al <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:0.7rem"></i></a>
+                        </p>
+                        <form id="api-key-form" onsubmit="event.preventDefault();">
+                            <div class="form-group" style="margin-bottom:0.75rem">
+                                <input type="password" id="gemini-api-key" class="form-control" placeholder="AI Studio API Anahtarı..." autocomplete="current-password">
+                            </div>
+                            <div style="display:flex; gap:0.5rem">
+                                <button type="button" id="btn-save-api-key" class="btn btn-primary" style="padding:0.4rem 1rem; font-size:0.8rem">Kaydet</button>
+                                <button type="button" id="btn-clear-api-key" class="btn btn-secondary" style="padding:0.4rem 1rem; font-size:0.8rem; color:var(--color-danger)">Temizle</button>
+                            </div>
+                        </form>
+                        
+                        <hr style="border:0; border-top:1px solid rgba(255,255,255,0.08); margin:1.25rem 0;">
+                        <h4 style="font-size:0.95rem; margin-bottom:0.5rem; font-weight:600"><i class="fa-solid fa-database"></i> Veri Yönetimi (Yedekleme & Yükleme)</h4>
+                        <p style="font-size:0.75rem; color:var(--text-secondary); margin-bottom:1rem">
+                            Tüm geçmiş odak verilerinizi, aktivitelerinizi ve ayarlarınızı yedekleyin veya geri yükleyin.
+                        </p>
+                        <div style="display:flex; gap:0.5rem">
+                            <button type="button" id="btn-export-data" class="btn btn-secondary" style="padding:0.4rem 1rem; font-size:0.8rem; display:flex; align-items:center; gap:0.4rem;">
+                                <i class="fa-solid fa-file-export"></i> Yedekle (Export)
+                            </button>
+                            <button type="button" id="btn-import-trigger" class="btn btn-secondary" style="padding:0.4rem 1rem; font-size:0.8rem; display:flex; align-items:center; gap:0.4rem;">
+                                <i class="fa-solid fa-file-import"></i> Yedekten Yükle (Import)
+                            </button>
+                            <input type="file" id="import-file-input" accept=".json" style="display:none;">
+                        </div>
+                    </div>
+
+                    <div class="coach-container">
+                        <div class="coach-avatar-wrapper">
+                            <div class="coach-avatar">
+                                <i class="fa-solid fa-brain"></i>
+                            </div>
+                        </div>
+                        <div class="coach-speech-bubble">
+                            <h4 class="coach-speech-title" id="coach-title">Analiz Bekleniyor...</h4>
+                            <p class="coach-speech-text" id="coach-commentary">
+                                Gününü koçunla analiz edebilmek için veri girişi yapmalı ve aktivitelerini tamamlamalısın. Liminal.ai davranışlarını inceliyor.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page 4: Yarın Planı -->
+            <div id="page-plan" class="page-view">
+                <div class="grid-2">
+                    <!-- Recommended Actions & Routine suggestions -->
+                    <div class="glass-card">
+                        <div class="card-header">
+                            <h3 class="card-title" style="color:var(--color-accent)"><i class="fa-solid fa-wand-magic-sparkles"></i>Yarın İçin Liminal Öneri Rutini</h3>
+                        </div>
+                        <p style="font-size:0.85rem; color:var(--text-secondary); margin-bottom: 1.5rem;">
+                            Bugünkü dikkat kaçışların (Drift) ve geri dönüşlerin incelenerek, yarına daha kontrollü başlaman için tasarlanmış modüler yapıdır.
+                        </p>
+                        <div class="routine-list" id="plan-routine-list">
+                            <!-- Populated dynamically by app.js based on rules -->
+                        </div>
+                    </div>
+
+                    <!-- Action items & dynamic plan checks -->
+                    <div class="glass-card" style="display:flex; flex-direction:column; gap:1.5rem">
+                        <div class="card-header">
+                            <h3 class="card-title"><i class="fa-solid fa-check-double"></i>Kritik Yarın Görevleri</h3>
+                        </div>
+                        <div style="display:flex; flex-direction:column; gap:1rem" id="plan-action-items">
+                            <label class="custom-checkbox">
+                                <input type="checkbox">
+                                <span class="checkmark"></span>
+                                <span class="checkbox-text">Güne hedefler belirlenmiş ve net olarak başla.</span>
+                            </label>
+                            <label class="custom-checkbox">
+                                <input type="checkbox">
+                                <span class="checkmark"></span>
+                                <span class="checkbox-text">İlk çalışma bloğunda cep telefonunu başka bir odaya bırak.</span>
+                            </label>
+                            <label class="custom-checkbox">
+                                <input type="checkbox">
+                                <span class="checkmark"></span>
+                                <span class="checkbox-text">Zorlu görevleri 25 dakikalık parçalara (Pomodoro) böl.</span>
+                            </label>
+                            <label class="custom-checkbox">
+                                <input type="checkbox">
+                                <span class="checkmark"></span>
+                                <span class="checkbox-text">Her 45 dakikalık focus bloğundan sonra 10 dakika göz dinlendirme yap.</span>
+                            </label>
+                        </div>
+
+                        <div class="quick-action-card" style="margin-top:auto">
+                            <div class="quick-action-text">
+                                <h4>Rayına Oturma Taktiği</h4>
+                                <p id="plan-tactic-text">Kendine aşırı yüklenme. Bugünden sadece %1 daha iyi bir gün hedefle.</p>
+                            </div>
+                            <i class="fa-solid fa-bolt" style="font-size:1.5rem; color:var(--color-warning)"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page 5: Gelecek Simülasyonu -->
+            <div id="page-simulator" class="page-view">
+                <div class="grid-2">
+                    <!-- Left: Control Panel -->
+                    <div class="glass-card">
+                        <div class="card-header">
+                            <h3 class="card-title" style="color:var(--color-accent)"><i class="fa-solid fa-sliders"></i> Simülasyon Parametreleri</h3>
+                        </div>
+                        <p style="font-size:0.85rem; color:var(--text-secondary); margin-bottom: 1.5rem;">
+                            Bugünkü odaklanma, sapma ve geri kazanım verilerinize göre geleceğinizi modelleyin.
+                        </p>
+                        
+                        <div class="form-group" style="margin-bottom: 1.5rem;">
+                            <label class="form-label" for="sim-timeline">Zaman Boyutu (Timeline)</label>
+                            <select id="sim-timeline" class="form-select" style="width:100%; padding:0.75rem; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:8px; color:var(--text-primary);">
+                                <option value="7_days">7 Gün (Haftalık / Çok Kısa Vade)</option>
+                                <option value="30_days" selected>30 Gün (Kısa Vade)</option>
+                                <option value="90_days">90 Gün (Orta Vade)</option>
+                                <option value="1_year">1 Yıl (Uzun Vade)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group" style="margin-bottom: 1.5rem;">
+                            <label class="form-label">Davranış Senaryosu</label>
+                            <div class="scenario-selector-grid" style="display:flex; flex-direction:column; gap:0.75rem;">
+                                <div class="scenario-card active" data-scenario="maintain">
+                                    <div class="scenario-icon"><i class="fa-solid fa-chart-line"></i></div>
+                                    <div class="scenario-info">
+                                        <h4>Mevcut Durumun Devamı</h4>
+                                        <p>Bugünkü odak/sapma oranları aynen sürdürülürse.</p>
+                                    </div>
+                                </div>
+                                <div class="scenario-card" data-scenario="adhere">
+                                    <div class="scenario-icon" style="color:var(--color-success)"><i class="fa-solid fa-circle-check"></i></div>
+                                    <div class="scenario-info">
+                                        <h4>Yarın Planına %100 Uyum</h4>
+                                        <p>AI Koç'un hazırladığı günlük rutinler tam uygulanırsa.</p>
+                                    </div>
+                                </div>
+                                <div class="scenario-card" data-scenario="worsen">
+                                    <div class="scenario-icon" style="color:var(--color-danger)"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                                    <div class="scenario-info">
+                                        <h4>Sapma Kısır Döngüsü</h4>
+                                        <p>Disiplinin kaybolması ve sapmanın artarak devam etmesi.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" style="margin-bottom: 1.5rem;">
+                            <label class="form-label" for="sim-custom-goals">Özel Odak / Hedef Notu (İsteğe Bağlı)</label>
+                            <textarea id="sim-custom-goals" placeholder="Örn: Yeni bir programlama dili öğrenmek, fitness hedeflerime ulaşmak..." style="width:100%; height:80px; padding:0.75rem; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:8px; color:var(--text-primary); resize:none; font-family:inherit; font-size:0.85rem;"></textarea>
+                        </div>
+
+                        <button id="run-sim-btn" class="btn btn-primary" style="width:100%; padding:0.85rem; display:flex; justify-content:center; align-items:center; gap:0.5rem;">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i> Geleceği Simüle Et
+                        </button>
+                    </div>
+
+                    <!-- Right: Results Panel -->
+                    <div class="glass-card" style="display:flex; flex-direction:column; gap:1.5rem">
+                        <div class="card-header">
+                            <h3 class="card-title"><i class="fa-solid fa-eye"></i> Simülasyon Raporu</h3>
+                        </div>
+
+                        <!-- Initial / Idle State -->
+                        <div id="sim-idle-state" class="sim-state-container" style="display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:3rem 1.5rem; flex-grow:1;">
+                            <i class="fa-solid fa-compass" style="font-size:3rem; color:var(--text-secondary); opacity:0.3; margin-bottom:1.5rem; animation: float 3s ease-in-out infinite;"></i>
+                            <h4 style="color:var(--text-secondary); margin-bottom:0.5rem">Analiz Hazırlanıyor</h4>
+                            <p style="font-size:0.85rem; color:var(--text-muted); max-width:280px;">Soldaki parametreleri seçerek simülasyonu başlatın. Geleceğiniz burada şekillenecek.</p>
+                        </div>
+
+                        <!-- Loading State -->
+                        <div id="sim-loading-state" class="sim-state-container hidden" style="display:none; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:3rem 1.5rem; flex-grow:1;">
+                            <div class="quantum-spinner" style="position:relative; width:80px; height:80px; margin-bottom:1.5rem;">
+                                <div class="double-bounce1" style="width:100%; height:100%; border-radius:50%; background-color:var(--color-accent); opacity:0.6; position:absolute; top:0; left:0; animation: bounce 2s infinite ease-in-out;"></div>
+                                <div class="double-bounce2" style="width:100%; height:100%; border-radius:50%; background-color:var(--color-warning); opacity:0.6; position:absolute; top:0; left:0; animation: bounce 2s infinite ease-in-out; animation-delay:-1.0s;"></div>
+                            </div>
+                            <h4 style="color:var(--color-accent); margin-bottom:0.5rem;">Kuantum Zaman Hesaplaması...</h4>
+                            <p style="font-size:0.85rem; color:var(--text-secondary); max-width:320px;" id="sim-loading-text">Bugünkü davranış eğrileriniz kuantum motoru ile simüle ediliyor...</p>
+                        </div>
+
+                        <!-- Results State -->
+                        <div id="sim-results-state" class="sim-state-container hidden" style="display:none; flex-direction:column; gap:1.5rem; flex-grow:1;">
+                            <!-- Performance Gauges -->
+                            <div class="sim-gauges-grid" style="display:grid; grid-template-columns: repeat(3, 1fr); gap:1rem; text-align:center;">
+                                <div class="gauge-card" style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); padding:0.75rem; border-radius:8px;">
+                                    <div style="font-size:1.5rem; font-weight:700; color:var(--color-accent);" id="gauge-career">0%</div>
+                                    <div style="font-size:0.7rem; color:var(--text-secondary); text-transform:uppercase; margin-top:0.25rem;">Hedef İlerlemesi</div>
+                                </div>
+                                <div class="gauge-card" style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); padding:0.75rem; border-radius:8px;">
+                                    <div style="font-size:1.5rem; font-weight:700; color:var(--color-danger);" id="gauge-burnout">0%</div>
+                                    <div style="font-size:0.7rem; color:var(--text-secondary); text-transform:uppercase; margin-top:0.25rem;">Tükenmişlik Riski</div>
+                                </div>
+                                <div class="gauge-card" style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); padding:0.75rem; border-radius:8px;">
+                                    <div style="font-size:1.5rem; font-weight:700; color:var(--color-success);" id="gauge-focus">0%</div>
+                                    <div style="font-size:0.7rem; color:var(--text-secondary); text-transform:uppercase; margin-top:0.25rem;">Disiplin Skoru</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Future Story Section -->
+                            <div class="future-story-card" style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); border-left: 3px solid var(--color-accent); padding:1rem; border-radius:0 8px 8px 0; max-height:220px; overflow-y:auto;">
+                                <h4 style="font-size:0.9rem; color:var(--color-accent); margin-bottom:0.5rem;"><i class="fa-solid fa-book-open"></i> Gelecekten Bir Gün (Anlatı)</h4>
+                                <p id="sim-story-text" style="font-size:0.8rem; line-height:1.5; color:var(--text-secondary); white-space:pre-line;"></p>
+                            </div>
+                            
+                            <!-- SVG Graph Container -->
+                            <div style="display:flex; flex-direction:column; gap:0.5rem;">
+                                <h4 style="font-size:0.8rem; color:var(--text-secondary); margin-bottom:0.25rem;"><i class="fa-solid fa-chart-area"></i> Odak vs Sapma Eğrisi</h4>
+                                <div id="sim-chart-container" style="width:100%; height:120px; background:rgba(0,0,0,0.2); border-radius:8px; border:1px solid rgba(255,255,255,0.05); padding:0.5rem; position:relative;">
+                                    <!-- Rendered dynamically by app.js -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page 6: Haftalık Analiz -->
+            <div id="page-trends" class="page-view">
+                <!-- Top Metric Cards -->
+                <div class="metrics-grid" style="display:grid; grid-template-columns: repeat(4, 1fr); gap:1rem; margin-bottom:1.5rem;">
+                    <div class="glass-card metric-card">
+                        <div class="metric-header">
+                            <span class="metric-title">Haftalık Ortalama Odak</span>
+                            <i class="fa-solid fa-bullseye" style="color:var(--color-focus)"></i>
+                        </div>
+                        <div class="metric-value" id="week-avg-focus">0 dk</div>
+                    </div>
+                    <div class="glass-card metric-card">
+                        <div class="metric-header">
+                            <span class="metric-title">Haftalık Ortalama Sapma</span>
+                            <i class="fa-solid fa-shuffle" style="color:var(--color-drift)"></i>
+                        </div>
+                        <div class="metric-value" id="week-avg-drift">0 dk</div>
+                    </div>
+                    <div class="glass-card metric-card">
+                        <div class="metric-header">
+                            <span class="metric-title">Haftalık Toplam Recovery</span>
+                            <i class="fa-solid fa-arrow-rotate-left" style="color:var(--color-recovery)"></i>
+                        </div>
+                        <div class="metric-value" id="week-total-recovery">0</div>
+                    </div>
+                    <div class="glass-card metric-card">
+                        <div class="metric-header">
+                            <span class="metric-title">Ortalama Kontrol Skoru</span>
+                            <i class="fa-solid fa-gauge" style="color:var(--color-warning)"></i>
+                        </div>
+                        <div class="metric-value" id="week-avg-control">0%</div>
+                    </div>
+                </div>
+
+                <div class="grid-2" style="margin-bottom:1.5rem;">
+                    <!-- Left: SVG Bar Chart -->
+                    <div class="glass-card">
+                        <div class="card-header">
+                            <h3 class="card-title"><i class="fa-solid fa-chart-bar"></i> Son 7 Günlük Odak vs Sapma Eğilimi</h3>
+                        </div>
+                        <p style="font-size:0.8rem; color:var(--text-secondary); margin-bottom:1.5rem;">
+                            Her günün toplam derin çalışma (Focus) ve erteleme (Drift) sürelerinin karşılaştırılması.
+                        </p>
+                        <div id="week-chart-container" style="width:100%; height:180px; background:rgba(0,0,0,0.15); border-radius:8px; border:1px solid rgba(255,255,255,0.05); padding:1rem; position:relative;">
+                            <!-- SVG weekly bar chart dynamically generated -->
+                        </div>
+                    </div>
+
+                    <!-- Right: Mood & Focus Correlation Matrix -->
+                    <div class="glass-card" style="display:flex; flex-direction:column; gap:1rem;">
+                        <div class="card-header">
+                            <h3 class="card-title"><i class="fa-solid fa-network-wired"></i> Ruh Hali - Odak Korelasyonu</h3>
+                        </div>
+                        <p style="font-size:0.8rem; color:var(--text-secondary);">
+                            Hangi duygu durumunun odaklanmanızı ne kadar etkilediğini gösteren analiz.
+                        </p>
+                        <div id="mood-correlation-list" style="display:flex; flex-direction:column; gap:0.75rem; flex-grow:1; justify-content:center;">
+                            <!-- Correlation items dynamically rendered -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bottom Row: Risky hours & AI Weekly Analysis -->
+                <div class="grid-2">
+                    <!-- Risky hours & Patterns -->
+                    <div class="glass-card" style="display:flex; flex-direction:column; gap:1.25rem;">
+                        <div class="card-header">
+                            <h3 class="card-title" style="color:var(--color-drift)"><i class="fa-solid fa-triangle-exclamation"></i> En Riskli Saat Dilimi</h3>
+                        </div>
+                        <div class="quick-action-card" style="margin-bottom:0.5rem;">
+                            <i class="fa-solid fa-clock" style="font-size:2rem; color:var(--color-drift)"></i>
+                            <div class="quick-action-text" style="margin-left:1rem;">
+                                <h4 id="risky-hour-title" style="font-size:1.1rem; color:var(--text-primary);">Analiz Ediliyor...</h4>
+                                <p id="risky-hour-desc" style="font-size:0.8rem; color:var(--text-secondary); margin-top:0.25rem;">Sapmaların en çok yığıldığı saat dilimi.</p>
+                            </div>
+                        </div>
+                        <div class="pattern-commentary" style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); border-radius:8px; padding:1rem;">
+                            <h4 style="font-size:0.85rem; color:var(--color-accent); margin-bottom:0.5rem;"><i class="fa-solid fa-magnifying-glass-chart"></i> Öne Çıkan Davranış Kalıbı</h4>
+                            <p id="week-pattern-text" style="font-size:0.8rem; line-height:1.5; color:var(--text-secondary);">Yeterli veri girildiğinde davranış örüntüleriniz burada listelenecektir.</p>
+                        </div>
+                    </div>
+
+                    <!-- AI Weekly Coach Review -->
+                    <div class="glass-card" style="display:flex; flex-direction:column; gap:1.25rem;">
+                        <div class="card-header" style="display:flex; justify-content:between; align-items:center; width:100%;">
+                            <h3 class="card-title" style="color:var(--color-recovery)"><i class="fa-solid fa-brain"></i> AI Haftalık Değerlendirme</h3>
+                            <button id="run-weekly-ai-btn" class="btn btn-primary" style="padding:0.4rem 0.8rem; font-size:0.8rem; display:flex; align-items:center; gap:0.4rem; margin-left:auto;">
+                                <i class="fa-solid fa-wand-magic-sparkles"></i> Haftalık AI Analizi Yap
+                            </button>
+                        </div>
+                        
+                        <!-- AI Review Result / Loading -->
+                        <div id="weekly-ai-idle" class="ai-review-content" style="padding:1.5rem; text-align:center; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); border-radius:8px; flex-grow:1; display:flex; flex-direction:column; align-items:center; justify-content:center;">
+                            <i class="fa-solid fa-compass-drafting" style="font-size:2rem; color:var(--text-muted); opacity:0.3; margin-bottom:0.75rem;"></i>
+                            <p style="font-size:0.8rem; color:var(--text-secondary);">Yukarıdaki butona basarak son 7 günün genel koç değerlendirmesini başlatın.</p>
+                        </div>
+                        
+                        <div id="weekly-ai-loading" class="hidden" style="display:none; padding:1.5rem; text-align:center; flex-grow:1; flex-direction:column; align-items:center; justify-content:center;">
+                            <div class="quantum-spinner" style="position:relative; width:50px; height:50px; margin-bottom:1rem;">
+                                <div class="double-bounce1" style="width:100%; height:100%; border-radius:50%; background-color:var(--color-recovery); opacity:0.6; position:absolute; top:0; left:0; animation: bounce 2s infinite ease-in-out;"></div>
+                                <div class="double-bounce2" style="width:100%; height:100%; border-radius:50%; background-color:var(--color-accent); opacity:0.6; position:absolute; top:0; left:0; animation: bounce 2s infinite ease-in-out; animation-delay:-1.0s;"></div>
+                            </div>
+                            <h4 style="font-size:0.9rem; color:var(--color-recovery);">Haftalık Rapor Sentezleniyor...</h4>
+                        </div>
+                        
+                        <div id="weekly-ai-result" class="hidden" style="display:none; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); border-left:3px solid var(--color-recovery); padding:1rem; border-radius:0 8px 8px 0; max-height:160px; overflow-y:auto; flex-grow:1;">
+                            <p id="weekly-ai-text" style="font-size:0.8rem; line-height:1.5; color:var(--text-secondary); white-space:pre-line;"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Script files -->
+    <script src="components.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
